@@ -1,0 +1,32 @@
+{
+  "succcess": true,
+  "data": {
+    "request": {
+      "question": "Query Prompt:  Find posts about “Order Flow Auction”  and extract most active Authors and list them: Author | Message Count | Summarise Context",
+      "maxdocs": "20",
+      "filter": {}
+    },
+    "response": {
+      "text": "The most active authors discussing \"Order Flow Auction\" are:\n\n1. @Fred: 2 messages - Fred shared links to two articles titled \"Order flow, auctions and centralisation I - a warning\" and \"Order flow, auctions and centralisation II - order flow auctions\" by Quintus Kilbourn.\n\n2. @alexo: 2 messages - Alexo shared a link to a talk by Eric Budish and asked if anyone had looked into his work. He also asked another user if they had looked into CowSwap.\n\n3. @Rjected: 2 messages - Rjected responded to Alexo's post about Eric Budish's work, discussing the concept of frequent batch auctions and how they could mitigate predatory HFT strategies. He also responded to Alexo's question about CowSwap, saying he hadn't seen it before.\n\n4. @nikete: 3 messages - Nikete shared a link to Eric Budish's recent work that looks at message data including failed orders. He also shared a link to a paper about a natural experiment in Taiwan with frequent batch auctions and another paper on competition between exchanges.\n\n5. @barnabé: 2 messages - Barnabé shared a link to a piece on order-flow and the increasing sophistication of mechanisms to make users whole for the value they add. He also responded to a criticism of the piece, asking for clarification.\n\n6. @0xjepsen: 2 messages - 0xjepsen discussed problems with on-chain auctions and the incentive for the auction to go off-chain. He also mentioned the field of queuing theory and its focus on fair ordering.\n\n7. @thegostep: 3 messages - Thegostep discussed his expectations for more searcher competition with flashbots and how this could lead to more miner fees. He also mentioned the shift in competition from auction strategies to finding new MEV opportunities."
+    },
+    "vector": [
+      {
+        "pageContent": "\n -Author: @Fred. :\n 📜 New posts published on Writing!\n\n**Order flow, auctions and centralisation I - a warning** by Quintus Kilbourn\nhttps://writings.flashbots.net/writings/order-flow-auctions-and-centralisation\n\n**Order flow, auctions and centralisation II - order flow auctions** by Quintus Kilbourn\nhttps://writings.flashbots.net/research/order-flow-auctions-and-centralisation-II\n -Author: @Fred. :\n 💬 New article published on the forum!\n\n**Modelling Realised Extractable Value in Proof of Stake Ethereum - an update of validator return post-merge** by elainehu\n\nhttps://collective.flashbots.net/t/modelling-realised-extractable-value-in-proof-of-stake-ethereum/290\n\n- MEV vs. REV\n- Modelling REV\n- Dynamic Validator Return\n\nAnd much more!",
+        "metadata": {
+          "author": "Fred.",
+          "ch": "flashbots",
+          "time": "2022-09-21T16:36:06.094+00:00"
+        }
+      },
+      {
+        "pageContent": "\n -Author: @0x7ec :\n you can use standard geth or even some other rpc endpoint\n -Author: @Cryptik :\n figuring out whats profitable\n -Author: @Cryptik :\n i know they order based on gas prices \n -Reply by @Shunshow : thats regular geth \n -Reply by @7citty7 : In MEV the order the way you want them to do \n -Reply by @7citty7 : + tx doesn't go in the public txpool\n -Author: @Cryptik :\n do you use the action method? \n -Reply by @0x7ec : what auction method?\n -Author: @Cryptik :\n auction**\n -Author: @Cryptik :\n can you guys school me please haha\n -Author: @Cryptik :\n gas priority auction \n -Reply by @0x7ec : for flashbots you dont need to pga",
+        "metadata": {
+          "author": "Cryptik",
+          "ch": "flashbots",
+          "time": "2022-03-19T16:38:14.076+00:00"
+        }
+      }
+    ],
+    "debug": {}
+  }
+}

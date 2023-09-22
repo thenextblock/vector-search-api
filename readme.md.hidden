@@ -1,0 +1,99 @@
+# Qdrant Vector Database
+
+```nash
+    curl 'http://3.122.118.19:6333/collections'
+    curl 'http://3.122.118.19:6333/collections/discord'
+```
+
+# Web UI
+
+Web UI: [https://discord-gpt.thenextblock.com/](https://discord-gpt.thenextblock.com/)
+
+# API Documentation
+
+## Overview
+
+TheNextBlock provides a QnA API which allows you to submit a question and retrieve related documents from the database.
+
+## API Base URL
+
+The base URL for the API is: https://qna.thenextblock.com/api/v1/
+
+## Request Method
+
+- POST
+
+## Request Body
+
+The request body contains three parameters:
+
+- `question` (string): The question to retrieve related documents from the database.
+- `maxdocs` (string): The maximum number of documents to retrieve from the database.
+- `filter` (object): This feature is not yet implemented.
+
+Example:
+
+```json
+{
+  "question": "Can you find the best topics aboit PBS ? Proposer and Builder separation",
+  "maxdocs": "5",
+  "filter": {}
+}
+```
+
+## Sample Request
+
+```bash
+    curl --location --request POST 'https://qna.thenextblock.com/api/v1/' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "question": "Can you find the best topics aboit PBS ? Proposer and Builder separation",
+        "maxdocs": "5",
+        "filter": {}
+    }'
+```
+
+## Response
+
+A successful response returns a success boolean, data object containing the request, response, vector, and debug objects.
+
+```json
+{
+    "succcess": true,
+    "data": {
+        "request": {
+            "question": "What is StakeSquid",
+            "maxdocs": "5",
+            "filter": {}
+        },
+        "response": {
+            "text": "StakeSquid is a community member or group that provides guides and tools for running services related to The Graph, a decentralized protocol for indexing and querying data from blockchains. They have created easy-to-deploy systems, such as Docker setups, for running Graph indexer nodes. They also contribute to community engagement and documentation."
+        },
+        "vector": [
+            {
+                "pageContent": "...",
+                "metadata": {
+                    "author": "Nick H.",
+                    "ch": "thegraph",
+                    "time": "2023-05-01T23:45:28.272+00:00"
+                }
+            },
+            ...
+        ],
+        "debug": {}
+    }
+}
+```
+
+## Available Chat Logs
+
+### The current database contains chat logs from the following Discord channels:
+
+- #arbitrum
+- #thegraph
+- #aave
+- #compound
+- #curve
+- #ethereum-rd
+- #flashbots
+- #uniswap
