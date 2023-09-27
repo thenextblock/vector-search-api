@@ -48,7 +48,7 @@ POST {{host}}/api/v1/search/
 content-type: application/json
 
 {
-    "question": "Can you find the best topics aboit PBS ? Proposer and Builder separation",
+    "question": "can you list the bets resourses about Proposer and Builder separation?",
     "collection": "discord",
     "filters": [],
     "maxdocs": "500",

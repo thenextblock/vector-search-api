@@ -4,6 +4,16 @@ import { Document } from "langchain/document";
 import { calculateTokensNew } from "./tikToken";
 import { Config } from "./Config";
 
+/**
+ * Searches for documents in a Qdrant collection based on a query and filters.
+ * @param {Object} options - The options object.
+ * @param {string} options.collectionName - The name of the Qdrant collection to search in.
+ * @param {string} options.query - The query to search for.
+ * @param {string[]} options.filters - The filters to apply to the search.
+ * @param {string} options.docsLimit - The maximum number of documents to return.
+ * @param {number} options.maxTokens - The maximum number of tokens allowed in the returned documents.
+ * @returns {Promise<Document[]>} - A promise that resolves to an array of Document objects.
+ */
 export async function qdrantVectorSearch({
   collectionName,
   query,
@@ -56,33 +66,76 @@ export async function qdrantVectorSearch({
   console.log("Search Result docs count: ", searchResult.length);
   console.log("Start Calculating max tokens ... !");
 
-  // TODO: refactor this, make faster
+  let tempContent = "";
+
   for (let item of searchResult) {
-    const { payload } = item;
-    if (payload) {
-      const pageContent = payload["page_content"] as string;
-
-      tokensCount += await calculateTokensNew(pageContent);
-
-      const metaData = payload["metadata"] as object;
-
+    if (item.payload) {
+      const metaData = item.payload["metadata"] as { ch: string };
+      // console.log("--: ", item.score);
+      // console.log("Channel: ", metaData.ch);
+      // console.log(item.payload["page_content"]);
+      tempContent += item.payload["page_content"];
       const doc = new Document({
-        pageContent: pageContent,
-        metadata: metaData,
+        pageContent: item.payload["page_content"] as string,
+        metadata: item.payload["metadata"] as object,
       });
 
       docs.push(doc);
-
-      if (tokensCount > maxTokens) {
-        console.log("!!! Documents exceed token limit : ", tokensCount);
-        break;
-      }
     }
+    if (item.score < 0.75) break;
   }
 
-  console.log("Max Tokens calculated ... ");
-  console.log("Tonkens Count ==> ", tokensCount);
-  console.log("Documents loaded : ", docs.length);
-  console.log("-------------------------------------------");
+  console.log("Final Docs Count : ", docs.length);
+
+  // console.log("Start Calculating content tokens ... !");
+  // tokensCount = await calculateTokensNew(tempContent);
+  // console.log("Tokens calculated ===> ", tokensCount);
+
+  // console.log("Document Before Update  : ", docs.length);
+
+  // if (tokensCount > maxTokens) {
+  //   console.log("!!! Documents exceed token limit : ", tokensCount);
+
+  //   console.log(
+  //     "tokensCount / maxTokens ",
+  //     tokensCount,
+  //     maxTokens,
+  //     tokensCount / maxTokens
+  //   );
+  //   // 10 /
+  //   const ratio = tokensCount / maxTokens;
+
+  //   console.log("Ratio : ", ratio);
+
+  //   let removeCount = 0;
+
+  //   if (ratio > 1) {
+  //     removeCount = Math.ceil(docs.length * (ratio - 1));
+  //   }
+
+  //   console.log("Remove Count : ", removeCount);
+
+  //   if (removeCount > 0) {
+  //     docs.splice(-removeCount);
+  //   }
+  //   console.log("Document After Update  : ", docs.length);
+  // }
+  // console.log("-------------------------");
   return docs;
+}
+
+async function processItem(item: any) {
+  const { payload } = item;
+  if (!payload) return { tokens: 0, doc: null };
+
+  const pageContent = payload["page_content"];
+  const tokens = await calculateTokensNew(pageContent);
+  const metaData = payload["metadata"];
+
+  const doc = new Document({
+    pageContent: pageContent,
+    metadata: metaData,
+  });
+
+  return { tokens, doc };
 }

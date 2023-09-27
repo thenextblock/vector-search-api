@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.json({ succcess: true, data: "Discord GPT: v2.0" });
+  res.json({ succcess: true, data: "Discord GPT: v3.0" });
 });
 
 app.post("/api/v1/", async (req: Request, res: Response) => {
@@ -27,7 +27,7 @@ app.post("/api/v1/", async (req: Request, res: Response) => {
 
 // Only Vector Search
 app.post("/api/v1/search", async (req: Request, res: Response) => {
-  console.log("Request search ------------------- ");
+  console.log("Request search ------------- ");
   console.log(req.body);
   console.log(" --------------------------- ");
 
