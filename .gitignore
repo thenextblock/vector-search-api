@@ -3,6 +3,7 @@
 .hidden
 .http
 /docs
+*.sh
 
 # dependencies
 /node_modules
