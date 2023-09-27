@@ -1,6 +1,6 @@
 # Qdrant Vector Database
 
-```nash
+```bash
     curl 'http://3.122.118.19:6333/collections'
     curl 'http://3.122.118.19:6333/collections/discord'
 ```

@@ -1,5 +1,5 @@
-@host = http://localhost:5000
-# @host = https://qna.thenextblock.com
+# @host = http://localhost:5000
+@host = https://w3search.thenextblock.com
 
 GET {{host}}/
 

@@ -71,9 +71,6 @@ export async function qdrantVectorSearch({
   for (let item of searchResult) {
     if (item.payload) {
       const metaData = item.payload["metadata"] as { ch: string };
-      // console.log("--: ", item.score);
-      // console.log("Channel: ", metaData.ch);
-      // console.log(item.payload["page_content"]);
       tempContent += item.payload["page_content"];
       const doc = new Document({
         pageContent: item.payload["page_content"] as string,
@@ -82,45 +79,22 @@ export async function qdrantVectorSearch({
 
       docs.push(doc);
     }
-    if (item.score < 0.75) break;
+    if (item.score < 0.77) break;
   }
 
   console.log("Final Docs Count : ", docs.length);
 
-  // console.log("Start Calculating content tokens ... !");
-  // tokensCount = await calculateTokensNew(tempContent);
-  // console.log("Tokens calculated ===> ", tokensCount);
+  tokensCount = await calculateTokensNew(tempContent);
 
-  // console.log("Document Before Update  : ", docs.length);
+  console.log("Tokens calculated ===> ", tokensCount);
+  if (tokensCount > maxTokens) {
+    console.log("!!! Documents exceed token limit : ", maxTokens / tokensCount);
+    const ratio = Math.ceil(docs.length * (maxTokens / tokensCount - 1));
+    console.log("Ratio : ", ratio);
+    docs.splice(ratio * 1.2);
+  }
 
-  // if (tokensCount > maxTokens) {
-  //   console.log("!!! Documents exceed token limit : ", tokensCount);
-
-  //   console.log(
-  //     "tokensCount / maxTokens ",
-  //     tokensCount,
-  //     maxTokens,
-  //     tokensCount / maxTokens
-  //   );
-  //   // 10 /
-  //   const ratio = tokensCount / maxTokens;
-
-  //   console.log("Ratio : ", ratio);
-
-  //   let removeCount = 0;
-
-  //   if (ratio > 1) {
-  //     removeCount = Math.ceil(docs.length * (ratio - 1));
-  //   }
-
-  //   console.log("Remove Count : ", removeCount);
-
-  //   if (removeCount > 0) {
-  //     docs.splice(-removeCount);
-  //   }
-  //   console.log("Document After Update  : ", docs.length);
-  // }
-  // console.log("-------------------------");
+  console.log("Final Docs Count : ", docs.length);
   return docs;
 }
 

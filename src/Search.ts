@@ -1,15 +1,7 @@
 import { OpenAI } from "langchain/llms/openai";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { PineconeClient } from "@pinecone-database/pinecone";
-import { PineconeStore } from "langchain/vectorstores/pinecone";
-import {
-  loadQAStuffChain,
-  loadQAMapReduceChain,
-  loadQARefineChain,
-  ConversationalRetrievalQAChain,
-  loadQAChain,
-} from "langchain/chains";
+import { loadQAChain } from "langchain/chains";
 import { Document } from "langchain/document";
 import { Config } from "./Config";
 import { qdrantVectorSearch } from "./QdrantSearch";
