@@ -59,10 +59,10 @@ export async function searchVectorDatabase(
   console.log(`Max Tokens: for Model ${model} ===  ${maxTokens} `);
 
   let docs = await qdrantVectorSearch({
-    collectionName: request.collection,
-    query: request.question,
-    filters: request.filters,
-    docsLimit: request.maxdocs.toString(),
+    collectionName: collection,
+    query: question,
+    filters: filters,
+    docsLimit: maxdocs.toString(),
     maxTokens: maxTokens,
   });
 
@@ -80,18 +80,29 @@ export async function searchVectorDatabase(
 export async function getQnaResponse(
   request: IRequest
 ): Promise<IResponse | null> {
+  const { collection, question, filters, maxdocs } = request;
+
+  console.log(`
+    -------------- QNA SEARCH  ----------------
+      collection: ${collection}
+      question: ${question}
+      filters: ${filters}
+      maxdocs: ${maxdocs}
+    -------------------------------------------
+
+  `);
   // Search in Qdrant
   let docs = await qdrantVectorSearch({
-    collectionName: request.collection,
-    query: request.question,
-    filters: request.filters,
-    docsLimit: request.maxdocs.toString(),
-    maxTokens: 8000, // ToDO: get from model
+    collectionName: collection,
+    query: question,
+    filters: filters,
+    docsLimit: maxdocs.toString(),
+    maxTokens: 6500,
   });
 
-  const report = _.countBy(docs, "metadata.ch");
-
   console.log("Documents loaded : ", docs.length);
+
+  const report = _.countBy(docs, "metadata.ch");
 
   const model = new OpenAI({
     temperature: 0,

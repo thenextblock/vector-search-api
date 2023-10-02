@@ -11,9 +11,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.json({ succcess: true, data: "Discord GPT: v3.0" });
+  res.json({ succcess: true, data: "Discord GPT: v3.3" });
 });
 
+// vector Search + Open AI Qna Response
 app.post("/api/v1/", async (req: Request, res: Response) => {
   try {
     console.log(req.body);

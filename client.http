@@ -1,5 +1,5 @@
-# @host = http://localhost:5000
-@host = https://w3search.thenextblock.com
+@host = http://localhost:5000
+
 
 GET {{host}}/
 
@@ -8,11 +8,12 @@ GET {{host}}/
 POST {{host}}/api/v1/
 content-type: application/json
 
-{
-    "question": "Find posts about “Order Flow Auction”  and extract most active Authors and list them: Author | Message Count | Summarise Context",
+{   
+    "question": "can you list the bets resourses about Proposer and Builder separation?",
     "collection": "discord",
-    "filters": ["flashbots", "thegraph"],
-    "maxdocs": "50"
+    "filters": [],
+    "maxdocs": "400",
+    "model": "gpt-4"
 }
 
 ###
@@ -29,18 +30,6 @@ content-type: application/json
 }
 
 
-###
-# @name query2
-POST {{host}}/api/v1/
-content-type: application/json
-
-{
-    "question": "can you list the bets resourses about Proposer and Builder separation?",
-    "collection": "discord",
-    "filters": ["arbitrum", "flashbots", "thegraph"],
-    "maxdocs": "500"
-}
-
 
 ###
 # @name Vector Search
@@ -48,9 +37,9 @@ POST {{host}}/api/v1/search/
 content-type: application/json
 
 {
-    "question": "can you list the bets resourses about Proposer and Builder separation?",
+    "question": "What is StakeSquid ?",
     "collection": "discord",
     "filters": [],
-    "maxdocs": "500",
+    "maxdocs": "400",
     "model": "gpt-4"
 }

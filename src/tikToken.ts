@@ -7,7 +7,7 @@ const models = require("tiktoken/model_to_encoding.json");
 let model: any = null;
 
 (async () => {
-  console.log("Loading model...");
+  // TODO : Load model from registry
   model = await load(registry[models["gpt-3.5-turbo-16k"]]);
   console.log("Model loaded ...", model.bpe_ranks.length);
 })();

@@ -27,12 +27,13 @@ export async function qdrantVectorSearch({
   docsLimit: string;
   maxTokens: number;
 }): Promise<Document[]> {
-  console.log(`-----------------  Start Search ---------------  
-      collection: ${collectionName}
-      query: ${query}
-      filter: ${filters}
-      limit: ${docsLimit}
-      maxTokens: ${maxTokens}
+  console.log(`
+  -------- QDRANT Start Search --------  
+    collection: ${collectionName}
+    query: ${query}
+    filter: ${filters}
+    limit: ${docsLimit}
+    maxTokens: ${maxTokens}
   `);
 
   interface IFilter {
@@ -70,7 +71,7 @@ export async function qdrantVectorSearch({
 
   for (let item of searchResult) {
     if (item.payload) {
-      const metaData = item.payload["metadata"] as { ch: string };
+      // const metaData = item.payload["metadata"] as { ch: string };
       tempContent += item.payload["page_content"];
       const doc = new Document({
         pageContent: item.payload["page_content"] as string,
